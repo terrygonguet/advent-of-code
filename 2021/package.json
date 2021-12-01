@@ -1,0 +1,22 @@
+{
+	"name": "advent-of-code-2021",
+	"version": "0.0.1",
+	"scripts": {
+		"build": "rescript",
+		"clean": "rescript clean -with-deps",
+		"start": "rescript build -w"
+	},
+	"main": "lib/es6/src/Main.bs.js",
+	"type": "module",
+	"keywords": [
+		"rescript"
+	],
+	"author": "",
+	"license": "MIT",
+	"dependencies": {
+		"@ryyppy/rescript-promise": "^2.1.0",
+		"bs-platform": "^9.0.2",
+		"rescript": "*",
+		"rescript-nodejs": "^14.1.0"
+	}
+}
