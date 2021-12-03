@@ -2,7 +2,7 @@ open NodeJs.Process
 open Belt
 open Belt.Option
 
-type solutionModule = {default: string => string}
+type solutionModule<'a> = {default: string => 'a}
 
 @val
 external esImport: string => Js.Promise.t<'a> = "import"
