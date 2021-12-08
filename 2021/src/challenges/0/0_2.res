@@ -2,5 +2,6 @@ let default = (inpt: string) => {
   open Js
   open! Belt
 
-  inpt
+  let lines = inpt->String2.split("\n")
+  lines
 }
