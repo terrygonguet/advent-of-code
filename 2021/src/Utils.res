@@ -8,5 +8,11 @@ let logAndPass = (thing: 'a) => {
   thing
 }
 
+let last = (arr: array<'a>) =>
+  switch arr->Js.Array2.length {
+  | 0 => None
+  | n => arr->Belt.Array.get(n - 1)
+  }
+
 @send external padStart: (string, int, string) => string = "padStart"
 @send external padEnd: (string, int, string) => string = "padEnd"
