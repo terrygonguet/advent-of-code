@@ -19,5 +19,16 @@ let isAllUpperCase = (str: string) => str == str->Js.String2.toLocaleUpperCase
 let vectorHas = (vector: Js.Vector.t<'a>, value: 'a) =>
   vector |> Js.Vector.foldLeft((. acc, cur) => acc || cur == value, false)
 
+let push = (arr: array<'a>, value: 'a) => {
+  Js.Array2.push(arr, value)->ignore
+  arr
+}
+
+let keepSomeAndGet = (arr: array<option<'a>>) =>
+  arr->Js.Array2.reduce(
+    (acc, cur) => Js.Option.isSome(cur) ? acc->push(cur->Js.Option.getExn) : acc,
+    [],
+  )
+
 @send external padStart: (string, int, string) => string = "padStart"
 @send external padEnd: (string, int, string) => string = "padEnd"
