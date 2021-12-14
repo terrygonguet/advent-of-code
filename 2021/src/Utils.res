@@ -24,7 +24,7 @@ let push = (arr: array<'a>, value: 'a) => {
   arr
 }
 
-let keepSomeAndGet = (arr: array<option<'a>>) =>
+let unwrapOptionArray = (arr: array<option<'a>>) =>
   arr->Js.Array2.reduce(
     (acc, cur) => Js.Option.isSome(cur) ? acc->push(cur->Js.Option.getExn) : acc,
     [],

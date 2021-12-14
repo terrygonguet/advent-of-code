@@ -74,10 +74,14 @@ let default = (inpt: string) => {
     ->Array2.unsafe_get(0)
     ->String2.split("\n")
     ->Array2.map(parseDot)
-    ->Utils.keepSomeAndGet
+    ->Utils.unwrapOptionArray
     ->Set.fromArray(~id=module(PairComparator))
   let folds =
-    blocks->Array2.unsafe_get(1)->String2.split("\n")->Array2.map(parseFold)->Utils.keepSomeAndGet
+    blocks
+    ->Array2.unsafe_get(1)
+    ->String2.split("\n")
+    ->Array2.map(parseFold)
+    ->Utils.unwrapOptionArray
 
   folds->Array2.reduce((dots, fold) => dots->applyFold(fold), dots)->stringify
 }
