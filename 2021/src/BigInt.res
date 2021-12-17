@@ -12,3 +12,4 @@ let max: (t, t) => t = %raw("(a, b) => a - b > 0n ? a : b")
 let min: (t, t) => t = %raw("(a, b) => a - b < 0n ? a : b")
 
 let zero: t = %raw("0n")
+let one: t = %raw("1n")
