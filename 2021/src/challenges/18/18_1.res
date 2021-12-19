@@ -1,3 +1,5 @@
+@@warning("-8")
+
 type rec pair = Constant(int) | Pair(pair, pair)
 and token = Open | Close | Comma | Literal(int) | Value(pair)
 
@@ -108,26 +110,86 @@ let rec reduce = (pair: array<token>) => {
   didSomething.contents ? reduce(pair) : pair
 }
 
-/*
+/* 
+
+
+
+
+
+
 
     switch token {
+
+
+
     | Literal(n) if n > 9 => {
+
+
+
         Js.log("----------------")
+
+
+
         Js.log2("from", pair->stringify)
+
+
+
         let a = n / 2
+
+
+
         let b = ceil(n->Js.Int.toFloat /. 2.0)
+
+
+
         pair
+
+
+
         ->Js.Array2.spliceInPlace(
+
+
+
           ~pos=i,
+
+
+
           ~remove=1,
+
+
+
           ~add=[Open, Literal(a), Comma, Literal(b->Belt.Float.toInt), Close],
+
+
+
         )
+
+
+
         ->ignore
+
+
+
         Js.log2("to  ", pair->stringify)
+
+
+
         didSomething := true
+
+
+
       }
+
+
+
     | _ => ()
+
+
+
     }
+
+
+
 	*/
 
 let add = (a: array<token>, b: array<token>) =>
