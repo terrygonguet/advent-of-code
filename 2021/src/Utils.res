@@ -30,5 +30,12 @@ let unwrapOptionArray = (arr: array<option<'a>>) =>
     [],
   )
 
+let unwrapNullableArray = (arr: array<Js.Nullable.t<'a>>) =>
+  arr->Js.Array2.reduce(
+    (acc, cur) =>
+      !Js.Nullable.isNullable(cur) ? acc->push(cur->Js.Nullable.toOption->Belt.Option.getExn) : acc,
+    [],
+  )
+
 @send external padStart: (string, int, string) => string = "padStart"
 @send external padEnd: (string, int, string) => string = "padEnd"
