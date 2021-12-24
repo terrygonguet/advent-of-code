@@ -13,5 +13,7 @@ let cmp: (t, t) => int = %raw("(a, b) => a == b ? 0 : (a < b ? -1 : 1)")
 let max: (t, t) => t = %raw("(a, b) => a - b > 0n ? a : b")
 let min: (t, t) => t = %raw("(a, b) => a - b < 0n ? a : b")
 
+let toString: t => string = %raw("a => a.toString()")
+
 let zero: t = %raw("0n")
 let one: t = %raw("1n")
