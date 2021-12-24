@@ -40,21 +40,22 @@ let parseCuboid: string => option<cuboid> = str =>
   | _ => None
   }
 
-let doesCuboidsIntersect = (a: cuboid, b: cuboid) => {
-  false
-}
+// let doesCuboidsIntersect = (a: cuboid, b: cuboid) => {
+//   false
+// }
 
-let addCuboid = (node: node, cuboid: cuboid) => {
-  let {cuboid: cur, children} = node
-  children->Js.Array2.forEach(node => node->addCuboid(cuboid))
-  if cuboid.val != cur.val && cur->doesCuboidsIntersect(cuboid) {
-    children->Js.Array2.push({cuboid: cuboid, children: []})
-  }
-}
+// let addCuboid = (node: node, cuboid: cuboid) => {
+//   let {cuboid: cur, children} = node
+//   children->Js.Array2.forEach(node => node->addCuboid(cuboid))
+//   if cuboid.val != cur.val && cur->doesCuboidsIntersect(cuboid) {
+//     children->Js.Array2.push({cuboid: cuboid, children: []})
+//   }
+// }
 
 let default = (inpt: string) => {
   open Js
   open! Belt
 
   let cuboids = inpt->String2.split("\n")->Array2.map(parseCuboid)->Utils.unwrapOptionArray
+  cuboids
 }
