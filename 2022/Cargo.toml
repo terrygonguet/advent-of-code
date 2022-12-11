@@ -7,3 +7,6 @@ edition = "2021"
 
 [dependencies]
 iterwindows = "0.3.0"
+lazy_static = "1.4.0"
+num-bigint = "0.4.3"
+regex = "1.7.0"
