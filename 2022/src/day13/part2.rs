@@ -1,12 +1,12 @@
 use std::cmp::Ordering;
 
 #[derive(PartialEq, Eq, Clone)]
-enum Value {
+enum Packet {
     Int(u32),
-    List(Vec<Value>),
+    List(Vec<Packet>),
 }
 
-impl Value {
+impl Packet {
     fn parse(str: &str) -> Option<Self> {
         let mut stack = vec![];
         for (i, char) in str.chars().enumerate() {
@@ -15,9 +15,9 @@ impl Value {
                 ']' => {
                     let vec = stack.pop().unwrap();
                     if let Some(container) = stack.last_mut() {
-                        container.push(Value::List(vec));
+                        container.push(Packet::List(vec));
                     } else {
-                        return Some(Value::List(vec));
+                        return Some(Packet::List(vec));
                     }
                 }
                 ',' => (),
@@ -33,7 +33,7 @@ impl Value {
                         }
                     }
                     if let Some(container) = stack.last_mut() {
-                        container.push(Value::Int(num));
+                        container.push(Packet::Int(num));
                     }
                 }
             }
@@ -42,13 +42,13 @@ impl Value {
     }
 }
 
-impl PartialOrd for Value {
+impl PartialOrd for Packet {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl Ord for Value {
+impl Ord for Packet {
     fn cmp(&self, other: &Self) -> Ordering {
         match (self, other) {
             (Self::Int(a), Self::Int(b)) => a.cmp(b),
@@ -68,13 +68,13 @@ impl Ord for Value {
 }
 
 pub fn solution(puzzle: &String) -> String {
-    let mut packets: Vec<Value> = puzzle
+    let sep_1 = Packet::parse("[[2]]").unwrap();
+    let sep_2 = Packet::parse("[[6]]").unwrap();
+    let mut packets: Vec<Packet> = puzzle
         .replace("\n\n", "\n")
         .lines()
-        .map(|line| Value::parse(line).unwrap())
+        .map(|line| Packet::parse(line).unwrap())
         .collect();
-    let sep_1 = Value::parse("[[2]]").unwrap();
-    let sep_2 = Value::parse("[[6]]").unwrap();
     packets.push(sep_1.clone());
     packets.push(sep_2.clone());
     packets.sort();
