@@ -1,14 +1,14 @@
-// #[macro_use]
-// extern crate lazy_static;
+#[macro_use]
+extern crate lazy_static;
 // extern crate regex;
 
 use std::{error::Error, fs};
 
-mod day14;
+mod day15;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let puzzle = fs::read_to_string("src/day14/puzzle.txt")?.replace("\r\n", "\n");
-    println!("Part 1: {}", day14::part1::solution(&puzzle));
-    println!("Part 2: {}", day14::part2::solution(&puzzle));
+    let puzzle = fs::read_to_string("src/day15/puzzle.txt")?.replace("\r\n", "\n");
+    println!("Part 1: {}", day15::part1::solution(&puzzle, 2000000));
+    println!("Part 2: {}", day15::part2::solution(&puzzle, 4000000));
     Ok(())
 }
