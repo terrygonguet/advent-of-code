@@ -4,11 +4,11 @@ extern crate lazy_static;
 
 use std::{error::Error, fs};
 
-mod day15;
+mod day16;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let puzzle = fs::read_to_string("src/day15/puzzle.txt")?.replace("\r\n", "\n");
-    println!("Part 1: {}", day15::part1::solution(&puzzle, 2000000));
-    println!("Part 2: {}", day15::part2::solution(&puzzle, 4000000));
+    let puzzle = fs::read_to_string("src/day16/puzzle.txt")?.replace("\r\n", "\n");
+    println!("Part 1: {}", day16::part1::solution(&puzzle));
+    println!("Part 2: {}", day16::part2::solution(&puzzle));
     Ok(())
 }
