@@ -1,0 +1,21 @@
+(lang dune 3.12)
+
+(name AOC2023)
+
+(generate_opam_files true)
+
+(source
+ (github username/reponame))
+
+(authors "Terry Gonguet")
+
+(maintainers "Terry Gonguet")
+
+(license MIT)
+
+(package
+ (name AOC2023)
+ (synopsis "Advent of Code 2023")
+ (depends ocaml dune))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
