@@ -1,0 +1,1 @@
+let solve puzzle = Int.to_string (List.length puzzle)
