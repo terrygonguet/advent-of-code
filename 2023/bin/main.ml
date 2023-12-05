@@ -1,4 +1,4 @@
-let channel = open_in "./04/puzzle.txt"
+let channel = open_in "./05/ex1.txt"
 let rec read_lines lines = 
   match input_line channel with
   | line -> read_lines (line :: lines)
@@ -8,4 +8,4 @@ let puzzle = read_lines []
 
 let () = 
   print_endline "";
-  print_endline (Day04part2.solve puzzle)
+  print_endline (Day05part1.solve puzzle)
