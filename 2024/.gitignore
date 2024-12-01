@@ -1,0 +1,4 @@
+# Don't publish puzzle inputs because something something copyright bullshit
+*.txt
+
+bin
