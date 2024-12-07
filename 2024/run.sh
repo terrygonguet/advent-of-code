@@ -5,4 +5,4 @@ if [ ! -d "$1" ]; then
 fi
 
 odin build $1 -debug -out=./bin
-./bin <&0 1>&1 2>&1
+./bin <"$1/$2.txt" 1>&1 2>&1
