@@ -2,11 +2,18 @@ package main
 
 import "../utils"
 import "core:fmt"
+import "core:mem"
 import "core:slice"
 import "core:strconv"
 import "core:strings"
 
 main :: proc() {
+	when ODIN_DEBUG {
+		tracking := utils.tracking_init()
+		context.allocator = mem.tracking_allocator(&tracking)
+		defer utils.tracking_cleanup(&tracking)
+	}
+
 	puzzle, err := utils.get_puzzle()
 	defer delete(puzzle)
 	lines := strings.split(puzzle, "\n")

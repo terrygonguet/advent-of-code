@@ -1,6 +1,8 @@
 package utils
 
 import "base:runtime"
+import "core:fmt"
+import "core:mem"
 import "core:os"
 import "core:slice"
 import "core:strings"
@@ -14,6 +16,22 @@ get_puzzle :: proc() -> (puzzle: string, err: os.Error) {
 		strings.write_bytes(&builder, buf[:n])
 	}
 	return strings.to_string(builder), nil
+}
+
+tracking_init :: proc(allocator := context.allocator) -> mem.Tracking_Allocator {
+	tracking: mem.Tracking_Allocator
+	mem.tracking_allocator_init(&tracking, allocator)
+	return tracking
+}
+
+tracking_cleanup :: proc(tracking: ^mem.Tracking_Allocator) {
+	for _, leak in tracking.allocation_map {
+		fmt.printf("%v leaked %m\n", leak.location, leak.size)
+	}
+	for bad_free in tracking.bad_free_array {
+		fmt.printf("%v allocation %p was freed badly\n", bad_free.location, bad_free.memory)
+	}
+	mem.tracking_allocator_destroy(tracking)
 }
 
 @(require_results)
