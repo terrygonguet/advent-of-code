@@ -106,11 +106,11 @@ filter_ctx :: proc(
 @(require_results)
 reduce_ctx :: proc(
 	data: $S/[]$T,
-	intializer: $U,
 	ctx: $C,
+	intializer: $U,
 	f: proc(acc: U, item: T, ctx: C) -> U,
 ) -> U {
-	acc := initializer
+	acc := intializer
 	for value in data {
 		acc = f(acc, value, ctx)
 	}
