@@ -116,3 +116,11 @@ reduce_ctx :: proc(
 	}
 	return acc
 }
+
+@(require_results)
+linear_search_key :: proc(data: $S/map[$K]$V, needle: V) -> (key: K, found: bool) {
+	for key, value in data {
+		if value == needle do return key, true
+	}
+	return
+}
