@@ -30,12 +30,15 @@ main :: proc() {
 	})
 	bounds := Vec2{101, 103} if is_puzzle else Vec2{11, 7}
 
+	robots2 := slice.clone(robots)
+	defer delete(robots2)
+
 	if res1, err1 := part1(robots, bounds); err == nil {
 		fmt.println("Part 1: ", res1)
 	} else {
 		fmt.println("Part 1 error'd: ", err1)
 	}
-	if res2, err2 := part2(robots, bounds); err == nil {
+	if res2, err2 := part2(robots2, bounds); err == nil {
 		fmt.println("Part 2: ", res2)
 	} else {
 		fmt.println("Part 2 error'd: ", err2)
