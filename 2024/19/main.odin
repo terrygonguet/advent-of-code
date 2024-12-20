@@ -7,19 +7,6 @@ import "core:slice"
 import "core:strconv"
 import "core:strings"
 
-Stripe :: enum {
-	Red   = 'r',
-	Green = 'g',
-	Blue  = 'u',
-	White = 'w',
-	Black = 'b',
-}
-
-Thingie :: struct {
-	is_terminal: bool,
-	children:    map[Stripe]^Thingie,
-}
-
 main :: proc() {
 	when ODIN_DEBUG {
 		tracking := utils.tracking_init()
@@ -38,38 +25,14 @@ main :: proc() {
 	defer delete(towels)
 	designs := lines[2:]
 
-	root: Thingie
-	defer thingie_destroy(&root, is_root = true)
-
-	for towel in towels {
-		cur_thingie := &root
-		for char in towel {
-			stripe := Stripe(char)
-			next_thingie, exists := cur_thingie.children[stripe]
-			if !exists {
-				cur_thingie.children[stripe] = new(Thingie)
-			}
-			cur_thingie = cur_thingie.children[stripe]
-		}
-		cur_thingie.is_terminal = true
-	}
-
-	if res1, err1 := part1(root, designs); err == nil {
+	if res1, err1 := part1(towels, designs); err == nil {
 		fmt.println("Part 1: ", res1)
 	} else {
 		fmt.println("Part 1 error'd: ", err1)
 	}
-	if res2, err2 := part2(root, designs); err == nil {
+	if res2, err2 := part2(towels, designs); err == nil {
 		fmt.println("Part 2: ", res2)
 	} else {
 		fmt.println("Part 2 error'd: ", err2)
 	}
-}
-
-thingie_destroy :: proc(thingie: ^Thingie, is_root := false) {
-	for _, child in thingie.children {
-		thingie_destroy(child)
-	}
-	delete(thingie.children)
-	if !is_root do free(thingie)
 }

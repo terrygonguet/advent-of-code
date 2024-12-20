@@ -3,17 +3,15 @@ package main
 import "../utils"
 import "core:fmt"
 import "core:slice"
+import "core:strings"
 
-part2 :: proc(root: Thingie, designs: []string) -> (result: int, err: any) {
-	root := root
-
-	count_possible_design_rec = count_possible_design_cached
+part2 :: proc(towels: []string, designs: []string) -> (result: int, err: any) {
 	result = utils.reduce_ctx(
 		designs,
-		&root,
+		towels,
 		0,
-		proc(sum: int, design: string, root: ^Thingie) -> int {
-			return sum + count_possible_design(design, root, root)
+		proc(sum: int, design: string, towels: []string) -> int {
+			return sum + count_possible_design(design, towels)
 		},
 	)
 	defer delete(cache)
@@ -22,36 +20,27 @@ part2 :: proc(root: Thingie, designs: []string) -> (result: int, err: any) {
 }
 
 @(private = "file")
-CacheKey :: struct {
-	design: string,
-	root:   ^Thingie,
-	cur:    ^Thingie,
-}
+cache: map[string]int
 
 @(private = "file")
-cache: map[CacheKey]int
-
-@(private = "file")
-count_possible_design_cached :: proc(design: string, root, cur: ^Thingie) -> int {
-	key := CacheKey{design, root, cur}
-	value, cached := cache[key]
+count_possible_design_cached :: proc(design: string, towels: []string) -> int {
+	value, cached := cache[design]
 	if cached do return value
 	else {
-		value := count_possible_design(design, root, cur)
-		cache[key] = value
+		value := count_possible_design(design, towels)
+		cache[design] = value
 		return value
 	}
 }
 
-@(private = "file")
-count_possible_design_rec := count_possible_design
-count_possible_design :: proc(design: string, root, cur: ^Thingie) -> int {
-	if len(design) == 0 do return 1 if cur.is_terminal else 0
-	else {
-		stripe := Stripe(design[0])
-		next, found := cur.children[stripe]
-		can_make := count_possible_design_rec(design[1:], root, next) if found else 0
-		if cur.is_terminal do return can_make + count_possible_design_rec(design, root, root)
-		else do return can_make
+count_possible_design :: proc(design: string, towels: []string) -> int {
+	total := 0
+	for towel in towels {
+		if towel == design do total += 1
+		if strings.starts_with(
+			design,
+			towel,
+		) {total += count_possible_design_cached(design[len(towel):], towels)}
 	}
+	return total
 }
