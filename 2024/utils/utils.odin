@@ -96,9 +96,27 @@ filter_ctx :: proc(
 	result: []T,
 	err: runtime.Allocator_Error,
 ) #optional_allocator_error {
-	r = make([dynamic]U, 0, len(data), allocator) or_return
+	r := make([dynamic]T, 0, len(data), allocator) or_return
 	for value, i in data {
-		if f(value, ctx) do append_elem(&r, value)
+		if f(value, ctx) do append(&r, value)
+	}
+	return r[:], nil
+}
+
+@(require_results)
+filter_ctx2 :: proc(
+	data: $S/[]$T,
+	ctx1: $C1,
+	ctx2: $C2,
+	f: proc(item: T, ctx1: C1, ctx2: C2) -> bool,
+	allocator := context.allocator,
+) -> (
+	result: []T,
+	err: runtime.Allocator_Error,
+) #optional_allocator_error {
+	r := make([dynamic]T, 0, len(data), allocator) or_return
+	for value, i in data {
+		if f(value, ctx1, ctx2) do append(&r, value)
 	}
 	return r[:], nil
 }
@@ -113,6 +131,21 @@ reduce_ctx :: proc(
 	acc := intializer
 	for value in data {
 		acc = f(acc, value, ctx)
+	}
+	return acc
+}
+
+@(require_results)
+reduce_ctx2 :: proc(
+	data: $S/[]$T,
+	ctx1: $C1,
+	ctx2: $C2,
+	intializer: $U,
+	f: proc(acc: U, item: T, ctx1: C1, ctx2: C2) -> U,
+) -> U {
+	acc := intializer
+	for value in data {
+		acc = f(acc, value, ctx1, ctx2)
 	}
 	return acc
 }
