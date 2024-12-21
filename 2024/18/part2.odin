@@ -1,5 +1,6 @@
 package main
 
+import "../pathfinding"
 import "../utils"
 import "core:fmt"
 import "core:slice"
@@ -10,7 +11,7 @@ part2 :: proc(points: []Vec2, bounds: Vec2) -> (result: Vec2, err: any) {
 
 	for i := 0;; i += 1 {
 		blocked[points[i]] = true
-		path, found := a_star_pathfind(blocked, bounds, {0, 0}, bounds - {1, 1})
+		path, found := pathfinding.a_star_pathfind(blocked, bounds, {0, 0}, bounds - {1, 1})
 		defer delete(path)
 		if !found {
 			result = points[i]
